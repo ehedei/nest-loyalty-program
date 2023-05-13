@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Member } from 'src/loyalty/interfaces/member.interface';
+import { Member } from 'src/loyalty/entities/member.entity';
 
 @Injectable()
 export class LoyaltyService {
