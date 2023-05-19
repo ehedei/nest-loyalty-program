@@ -1,8 +1,8 @@
 {
   "name": "loyalty-program",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Small pet project",
+  "author": "Ehedei Hernández",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.2",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "class-transformer": "^0.5.1",

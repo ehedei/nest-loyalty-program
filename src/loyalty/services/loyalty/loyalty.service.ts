@@ -1,35 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Member } from 'src/loyalty/entities/member.entity';
+import { MembersRepository } from 'src/loyalty/repositories/members-repository/members-repository.provider';
 
 @Injectable()
 export class LoyaltyService {
-  private readonly members: Member[] = [
-    {
-      id: 1,
-      name: 'Paco Porras',
-      points: 6,
-      discount: 0,
-    },
-    {
-      id: 2,
-      name: 'María Sanz',
-      points: 0,
-      discount: 0,
-    },
-    {
-      id: 3,
-      name: 'Marco Polo',
-      points: 3,
-      discount: 0,
-    },
-  ];
+  private readonly amountPerPoint: number =
+    this.configService.get<number>('amountPerPoint');
+  private readonly pointsNeededForDiscount: number =
+    this.configService.get<number>('pointsNeededForDiscount');
+  private readonly baseDiscount: number =
+    this.configService.get<number>('baseDiscount');
 
-  private readonly amountPerPoint = 10;
-  private readonly pointsNeededForDiscount = 10;
-  private readonly baseDiscount = 3;
+  constructor(
+    private configService: ConfigService,
+    private readonly membersRepository: MembersRepository,
+  ) {}
 
   public findLoyaltyMember(memberId: number): Member {
-    const member = this.members.find((member) => member.id === memberId);
+    const member = this.membersRepository.findOne(memberId);
 
     if (!member) {
       throw new NotFoundException(`Member with id ${memberId} not found`);
@@ -38,11 +27,8 @@ export class LoyaltyService {
     return member;
   }
 
-  public updateLoyaltyMember(
-    memberId: number,
-    amount: number,
-  ): Member | undefined {
-    const member = this.members.find((member) => member.id === memberId);
+  public updateLoyaltyMember(memberId: number, amount: number): Member {
+    const member = this.membersRepository.findOne(memberId);
 
     if (!member) {
       throw new NotFoundException(`Member with id ${memberId} not found`);
@@ -53,6 +39,6 @@ export class LoyaltyService {
       Math.floor(member.points / this.pointsNeededForDiscount) *
       this.baseDiscount;
 
-    return member;
+    return this.membersRepository.update(member);
   }
 }
