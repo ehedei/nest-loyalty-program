@@ -22,17 +22,75 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project consists of implementing two endpoints to manage members and their accumulated points. The details of each endpoint are described below:
 
-## Installation
+<br/>
+
+### GET /member/{MEMBER_ID}
+
+This endpoint allows identifying a member using their identifier (`MEMBER_ID`). The response is structured as follows:
+
+- If the `MEMBER_ID` is valid, the endpoint will respond with a `StatusCode: 200` and a JSON object with the following structure:
+
+  ```json
+  {
+    "name": "Paco Porras",
+    "points": 6,
+    "discount": 0
+  }
+  ```
+
+  Where:
+
+  - `name` represents the name of the member.
+  - `points` indicate the number of accumulated points so far.
+  - `discount` is the discount applicable to the next purchase.
+
+- If the `MEMBER_ID` is not valid, the endpoint will respond with a `StatusCode: 404`.
+
+<br/>
+
+### POST /member/{MEMBER_ID}
+
+This endpoint allows increasing the available points for a member. It expects to receive a JSON object in the following format:
+
+```json
+{
+  "amount": 150.0
+}
+```
+
+Where `amount` indicates the amount of the purchase made by the member.
+
+The response is defined as follows:
+
+- If the `MEMBER_ID` is valid, the member's points balance will be incremented, and the endpoint will respond with a `StatusCode: 200`.
+
+- If the `MEMBER_ID` is not valid, the endpoint will respond with a `StatusCode: 404`.
+
+<br/>
+
+### Additional Considerations
+
+- Valid `MEMBER_ID` corresponds to the unique identifiers assigned to each member.
+
+Thank you for using this project! If you have any questions or need further information, please don't hesitate to contact me.
+
+<br/>
+
+# Installation
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
+Rename file .env.template to .env, and change the environment variables as you wish.
+
+<br/>
+
+# Running the app
 
 ```bash
 # development
@@ -45,7 +103,9 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Test
+<br/>
+
+# Test
 
 ```bash
 # unit tests
@@ -58,16 +118,8 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## Support
+<br/>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
+# License
 
 Nest is [MIT licensed](LICENSE).
